@@ -636,8 +636,8 @@ Alguns exemplos:
 
 ## Instruções para entregar seu projeto:
 
-Crie esse projeto em sua conta no **GitHub** e nos envie o link do repositório.
+Crie esse projeto em sua conta no **GitHub** e nos envie o link do repositório. (feito)
 
-ps: Lembre-se de deixar o repositório público para que possamos ter acesso ao código
+ps: Lembre-se de deixar o repositório público para que possamos ter acesso ao código (feito)
 
 #VQV
