@@ -38,6 +38,6 @@ defmodule PlatformWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Platform.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    {:ok, conn: Phoenix.ConnTest.build_conn(), tags: tags}
   end
 end

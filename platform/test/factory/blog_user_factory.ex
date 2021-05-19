@@ -10,7 +10,7 @@ defmodule Platform.BlogUserFactory do
           displayName: Faker.Person.PtBr.name(),
           email: Faker.Internet.email(),
           image: Faker.Internet.image_url(),
-          password: Faker.Internet.user_name()
+          password: String.slice(Faker.Internet.user_name(), 0, 6)
         }
       end
     end
