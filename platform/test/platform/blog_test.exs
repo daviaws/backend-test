@@ -22,7 +22,6 @@ defmodule Platform.BlogTest do
     end
 
     test "list_users/0 returns all users" do
-      require IEx; IEx.pry
       user = user_fixture()
       assert Blog.list_users() == [user]
     end
