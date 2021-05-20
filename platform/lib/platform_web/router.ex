@@ -14,9 +14,9 @@ defmodule PlatformWeb.Router do
   end
 
   scope "/", PlatformWeb do
-    pipe_through :browser
+    pipe_through :api
 
-    get "/", PageController, :index
+    post "/user", UserController, :create
   end
 
   # Other scopes may use custom stacks.

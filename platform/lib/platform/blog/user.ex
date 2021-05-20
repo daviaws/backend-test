@@ -15,10 +15,16 @@ defmodule Platform.Blog.User do
     timestamps()
   end
 
+  @required [:displayName, :email, :password, :image]
+
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, attrs) do 
     user
-    |> cast(attrs, [:displayName, :email, :password, :image])
-    |> validate_required([:displayName, :email, :password, :image])
+    |> cast(attrs, @required)
+    |> validate_required(@required)
+    |> validate_length(:displayName, min: 8)
+    |> validate_format(:email, ~r/[a-zA-Z0-9-]+@[a-zA-Z0-9-]+/, message: "must be a valid format `name@domain`")
+    |> unique_constraint(:email, message: "Usuário já existe")
+    |> validate_length(:password, min: 6, max: 6)
   end
 end

@@ -16,7 +16,7 @@ O projeto deverá ser entregue até 7 dias depois de você ter recebido as instr
 
 ## Requisitos Obrigatórios:
 
-### 0 – Banco de Dados
+### 0 – Banco de Dados (feito)
 
 - Deve conter uma tabela chamada **Users**, com estrutura similar ao apresentado abaixo:
 
@@ -43,7 +43,7 @@ O projeto deverá ser entregue até 7 dias depois de você ter recebido as instr
   }
   ```
 
-### 1 - Sua aplicação deve ter o endpoint POST `/user`
+### 1 - Sua aplicação deve ter o endpoint POST `/user` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -83,55 +83,55 @@ O projeto deverá ser entregue até 7 dias depois de você ter recebido as instr
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível cadastrar um usuário com sucesso]**
+**[Será validado que é possível cadastrar um usuário com sucesso]** (feito)
 
 Se o usuário for criado com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
 
 ![Cadastro com sucesso](./public/cadastrodeusuario.png)
 
-**[Será validado que não é possível cadastrar usuário com o campo `displayName` menor que 8 caracteres]**
+**[Será validado que não é possível cadastrar usuário com o campo `displayName` menor que 8 caracteres]** (feito)
 
 Se o usuário tiver o campo "displayName" menor que 8 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Nome menor que 8](./public/nomemenorque8.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: rubinho`]**
+**[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: rubinho`]** (feito)
 
 Se o usuário tiver o campo "email" com o formato `email: rubinho` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Email inválido](./public/emailinvalido.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: @gmail.com`]**
+**[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: @gmail.com`]**  (feito)
 
 Se o usuário tiver o campo "email" com o formato `email: @gmail.com` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Email inválido](./public/emailinvalido2.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que o campo `email` é obrigatório]**
+**[Será validado que o campo `email` é obrigatório]** (feito)
 
 Se o usuário não tiver campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Email obrigatório](./public/emailobrigatorio.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível cadastrar usuário com o campo `password` menor que 6 caracteres]**
+**[Será validado que não é possível cadastrar usuário com o campo `password` menor que 6 caracteres]** (feito)
 
 Se o usuário tiver o campo "password" menor que 6 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Senha menor que 6](./public/senhamenorque6.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que o campo `password` é obrigatório]**
+**[Será validado que o campo `password` é obrigatório]** (feito)
 
 Se o usuário não tiver campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Senha Obrigatória](./public/semsenha.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Validar que não é possível cadastrar um usuário com email já existente]**
+**[Validar que não é possível cadastrar um usuário com email já existente]** (feito)
 
 Se o usuário cadastrar o campo "email" com um email que já existe, o resultado retornado deverá ser conforme exibido abaixo, com um status http `409`:
 
