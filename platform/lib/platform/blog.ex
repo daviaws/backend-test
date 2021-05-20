@@ -7,6 +7,7 @@ defmodule Platform.Blog do
   alias Platform.Repo
 
   alias Platform.Blog.User
+  alias Platform.Blog.Login
 
   @doc """
   Returns the list of users.
@@ -100,5 +101,15 @@ defmodule Platform.Blog do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def login(attrs) do
+    {user, changeset} = Login.validate(attrs)
+
+    if changeset.valid? do
+      PlatformWeb.JWT.Token.generate_and_sign(%{"user_id" => user.id})
+    else
+      {:error, changeset}
+    end
   end
 end

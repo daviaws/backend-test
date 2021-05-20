@@ -17,6 +17,8 @@ defmodule PlatformWeb.Router do
     pipe_through :api
 
     post "/user", UserController, :create
+
+    post "/login", LoginController, :create
   end
 
   # Other scopes may use custom stacks.

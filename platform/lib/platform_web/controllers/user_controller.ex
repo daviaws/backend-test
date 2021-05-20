@@ -11,13 +11,12 @@ defmodule PlatformWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, user_params) do
-    with {:ok, %User{}} <- Blog.create_user(user_params),
-      {:ok, token, _token_map} <- PlatformWeb.JWT.Token.generate_and_sign()
-     do
+  def create(conn, params) do
+    with {:ok, %User{}} <- Blog.create_user(params),
+         {:ok, token, _token_map} <- Blog.login(params) do
       conn
       |> put_status(:created)
-      |> render("show.json", token: token)
+      |> render("show.json", login: token)
     end
   end
 

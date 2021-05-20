@@ -137,7 +137,7 @@ Se o usuário cadastrar o campo "email" com um email que já existe, o resultado
 
 ![Usuário Existente](./public/usuariojaexistente.png)
 
-### 2 - Sua aplicação deve ter o endpoint POST `/login`
+### 2 - Sua aplicação deve ter o endpoint POST `/login` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -162,41 +162,41 @@ Se o usuário cadastrar o campo "email" com um email que já existe, o resultado
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível fazer login com sucesso]**
+**[Será validado que é possível fazer login com sucesso]** (feito)
 
 Se o login foi feito com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![Login com sucesso](./public/logincomsucesso.png)
 
-**[Será validado que não é possível fazer login sem o campo `email`]**
+**[Será validado que não é possível fazer login sem o campo `email`]** (feito)
 
 Se o login não tiver o campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Sem login](./public/sememaillogin.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível fazer login sem o campo `password`]**
+**[Será validado que não é possível fazer login sem o campo `password`]** (feito)
 
 Se o login não tiver o campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Sem senha](./public/semsenhalogin.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível fazer login com o campo `email` em branco]**
+**[Será validado que não é possível fazer login com o campo `email` em branco]** (feito)
 
 Se o login tiver o campo "email" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Email em branco](./public/emailbrancologin.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível fazer login com o campo `password` em branco]**
+**[Será validado que não é possível fazer login com o campo `password` em branco]** (feito)
 
 Se o login tiver o campo "password" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![Senha em branco](./public/senhabrancologin.png)
 (As contrabarras `\` estão escapando as aspas de dentro da string)
 
-**[Será validado que não é possível fazer login com um usuário que não existe]**
+**[Será validado que não é possível fazer login com um usuário que não existe]** (feito)
 
 Se o login for com usuário inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
