@@ -1,11 +1,6 @@
 defmodule PlatformWeb.UserControllerTest do
   use PlatformWeb.ConnCase
 
-  alias Platform.Blog
-  alias Platform.Blog.User
-
-  alias Platform.Helper.Map, as: HMap
-
   @default_attrs %{
     displayName: "Brett Wiltshire",
     email: "brett@email.com",
@@ -26,11 +21,11 @@ defmodule PlatformWeb.UserControllerTest do
 
   describe "create user" do
     test "renders user when data is valid", %{conn: conn, attrs: attrs} do
-      conn = post(conn, Routes.user_path(conn, :create), user: attrs)
+      conn = post(conn, Routes.user_path(conn, :create), attrs)
       
-      assert %{"id" => id} = response = json_response(conn, 201)["data"]   
+      assert %{"token" => token} = json_response(conn, 201)
 
-      assert Map.put(attrs, :id, id) == HMap.atomize_keys(response)
+      assert {:ok, _token_map} = PlatformWeb.JWT.Token.verify_and_validate(token)
     end
 
     @tag displayName: "1234567"
