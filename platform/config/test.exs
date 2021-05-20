@@ -21,9 +21,10 @@ config :platform, PlatformWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-config :joken, default_signer: """
------BEGIN PUBLIC KEY-----
-MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAExPC+rwkQaTKrNKYupF6XJBOaPrGVxxy/
-tg5B8J4TOrN8M9PyzV6BzbXHYh2Jw3Y4rmQlIa99K89C+jRwigRJcw==
------END PUBLIC KEY-----
-"""
+config :joken,
+  default_signer: """
+  -----BEGIN PUBLIC KEY-----
+  MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAExPC+rwkQaTKrNKYupF6XJBOaPrGVxxy/
+  tg5B8J4TOrN8M9PyzV6BzbXHYh2Jw3Y4rmQlIa99K89C+jRwigRJcw==
+  -----END PUBLIC KEY-----
+  """

@@ -5,15 +5,16 @@ defmodule PlatformWeb.UserControllerTest do
     displayName: "Brett Wiltshire",
     email: "brett@email.com",
     password: "123456",
-    image: "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+    image:
+      "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
   }
 
   setup %{conn: conn, tags: tags} do
     attrs = %{
       displayName: tags[:displayName] || @default_attrs[:displayName],
-      email: tags[:email] || @default_attrs[:email] ,
+      email: tags[:email] || @default_attrs[:email],
       password: tags[:password] || @default_attrs[:password],
-      image: tags[:image] || @default_attrs[:image],
+      image: tags[:image] || @default_attrs[:image]
     }
 
     {:ok, conn: put_req_header(conn, "accept", "application/json"), attrs: attrs}
@@ -22,7 +23,7 @@ defmodule PlatformWeb.UserControllerTest do
   describe "create user" do
     test "renders user when data is valid", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), attrs)
-      
+
       assert %{"token" => token} = json_response(conn, 201)
 
       assert {:ok, _token_map} = PlatformWeb.JWT.Token.verify_and_validate(token)
@@ -48,7 +49,10 @@ defmodule PlatformWeb.UserControllerTest do
     end
 
     @tag email: "not formated"
-    test "renders errors when email is not on format `<prefix>@<domain>`", %{conn: conn, attrs: attrs} do
+    test "renders errors when email is not on format `<prefix>@<domain>`", %{
+      conn: conn,
+      attrs: attrs
+    } do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
       assert json_response(conn, 400)["errors"] != %{}

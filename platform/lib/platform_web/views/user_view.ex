@@ -3,7 +3,7 @@ defmodule PlatformWeb.UserView do
 
   alias PlatformWeb.LoginView
 
-  def render("show.json", %{token: token}) do
-    render_one(token, LoginView, "login.json", as: :token)
+  def render("show.json", %{login: login}) do
+    render_one(login, LoginView, "login.json")
   end
 end

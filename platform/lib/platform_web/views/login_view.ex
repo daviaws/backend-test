@@ -2,11 +2,11 @@ defmodule PlatformWeb.LoginView do
   use PlatformWeb, :view
   alias PlatformWeb.LoginView
 
-  def render("show.json", %{token: token}) do
-    %{data: render_one(token, LoginView, "login.json")}
+  def render("show.json", %{login: login}) do
+    render_one(login, LoginView, "login.json")
   end
 
-  def render("login.json", %{token: token}) do
-    %{token: token}
+  def render("login.json", %{login: login}) do
+    %{token: login}
   end
 end
