@@ -241,7 +241,7 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ![Token inválido](./public/tokeninvalido.png)
 
-### 4 - Sua aplicação deve ter o endpoint GET `/user/:id`
+### 4 - Sua aplicação deve ter o endpoint GET `/user/:id` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -260,25 +260,25 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível listar um usuario específico com sucesso]**
+**[Será validado que é possível listar um usuario específico com sucesso]** (feito)
 
 Ao listar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![Listar um usuário](./public/listarumusuario.png)
 
-**[Será validado que não é possível listar um usuário inexistente]**
+**[Será validado que não é possível listar um usuário inexistente]** (feito)
 
 Se o usuário for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
 
 ![Listar um usuário inexistente](./public/usuarioinexistente.png)
 
-**[Será validado que não é possível listar um determinado usuário sem o token na requisição]**
+**[Será validado que não é possível listar um determinado usuário sem o token na requisição]** (feito)
 
 Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![Listar um usuário sem token](./public/semtokenumusuario.png)
 
-**[Será validado que não é possível listar um determinado usuário com o token inválido]**
+**[Será validado que não é possível listar um determinado usuário com o token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
