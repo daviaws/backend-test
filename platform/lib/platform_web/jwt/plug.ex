@@ -41,7 +41,9 @@ defmodule PlatformWeb.JWT.Plug do
 
   defp get_bearer_token(conn) do
     case req_authorization_header(conn) do
-      nil -> nil
+      nil ->
+        nil
+
       dirty_token ->
         dirty_token |> clean_token
     end
