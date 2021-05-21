@@ -22,21 +22,20 @@ defmodule Platform.Blog do
     Repo.all(User)
   end
 
-  @doc """
-  Gets a single user.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!(123)
-      %User{}
-
-      iex> get_user!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_user!(id), do: Repo.get!(User, id)
+
+  def get_user(id) do
+    case Repo.get(User, id) do
+      nil ->
+        {
+          :error,
+          Ecto.Changeset.add_error(User.empty_changeset(), :message, "Usuário não existe")
+        }
+
+      user ->
+        {:ok, user}
+    end
+  end
 
   @doc """
   Creates a user.

@@ -41,8 +41,6 @@ defmodule PlatformWeb.UserControllerTest do
     struct
     |> Map.from_struct()
     |> Map.take(select)
-
-    # |> Platform.Helper.Map.atomize_keys()
   end
 
   @user_view_fields [:id, :displayName, :email, :image]
@@ -84,6 +82,58 @@ defmodule PlatformWeb.UserControllerTest do
         conn
         |> put_bearer_token("invalid-token")
         |> get(Routes.user_path(conn, :index), attrs)
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
+  end
+
+  describe "show user" do
+    test "renders user when data is valid", %{conn: conn, attrs: attrs} do
+      user1 = insert(:blog_user, attrs)
+      token = auth_user(attrs)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.user_path(conn, :show, user1.id))
+
+      assert struct_to_map(user1, @user_view_fields) ==
+               json_response(conn, 200) |> Platform.Helper.Map.atomize_keys()
+    end
+
+    test "renders 404 when user not exist", %{conn: conn, attrs: attrs} do
+      user1 = insert(:blog_user, attrs)
+      token = auth_user(attrs)
+
+      user_id = user1.id + 1
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.user_path(conn, :show, user_id))
+
+      assert %{"message" => ["Usuário não existe"]} = json_response(conn, 404)["errors"]
+    end
+
+    test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
+      # same setup as success
+      user1 = insert(:blog_user, attrs)
+      _token = auth_user(attrs)
+
+      conn =
+        conn
+        |> get(Routes.user_path(conn, :show, user1.id))
+
+      assert %{"message" => "Token não encontrado"} = json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn, attrs: attrs} do
+      user1 = insert(:blog_user, attrs)
+
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> get(Routes.user_path(conn, :show, user1.id))
 
       assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
     end

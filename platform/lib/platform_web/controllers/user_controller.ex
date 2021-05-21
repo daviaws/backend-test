@@ -21,8 +21,11 @@ defmodule PlatformWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Blog.get_user!(id)
-    render(conn, "show.json", user: user)
+    with {:ok, %User{} = user} <- Blog.get_user(id) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", user: user)
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

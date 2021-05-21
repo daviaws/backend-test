@@ -31,6 +31,7 @@ defmodule PlatformWeb.Router do
     pipe_through :authenticatedApi
 
     get "/user", UserController, :index
+    get "/user/:id", UserController, :show
   end
 
   # Other scopes may use custom stacks.

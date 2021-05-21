@@ -12,6 +12,7 @@ defmodule PlatformWeb.FallbackController do
   # The tutorial says: It seems to work well with Ecto.Errors for instance
   def map_status(changeset) do
     case PlatformWeb.ChangesetView.translate_errors(changeset) do
+      %{message: ["Usuário não existe"]} -> :not_found
       %{email: ["Usuário já existe"]} -> :conflict
       _ -> :bad_request
     end
