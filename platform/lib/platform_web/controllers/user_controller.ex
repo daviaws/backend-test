@@ -28,18 +28,11 @@ defmodule PlatformWeb.UserController do
     end
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Blog.get_user!(id)
+  def delete(conn, _params) do
+    id = Map.get(conn.assigns[:claims], "user_id")
 
-    with {:ok, %User{} = user} <- Blog.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    user = Blog.get_user!(id)
-
-    with {:ok, %User{}} <- Blog.delete_user(user) do
+    with {:ok, %User{} = user} <- Blog.get_user(id),
+         {:ok, %User{}} <- Blog.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
   end

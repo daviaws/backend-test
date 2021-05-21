@@ -284,7 +284,7 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ![Listar um usuário com token inválido](./public/tokeninvalidoumusuario.png)
 
-### 5 - Sua aplicação deve ter o endpoint DELETE `/user/me`
+### 5 - Sua aplicação deve ter o endpoint DELETE `/user/me` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -292,19 +292,19 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível excluir meu usuário com sucesso]**
+**[Será validado que é possível excluir meu usuário com sucesso]** (feito)
 
 Ao deletar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `204`:
 
 ![Deletar com sucesso](./public/deletarcomsucesso.png)
 
-**[Será validado que não é possivel excluir meu usuário com token inválido]**
+**[Será validado que não é possivel excluir meu usuário com token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![Deletar com token inválido](./public/deletarcomtokeninvalido.png)
 
-**[Será validado que não é possivel excluir meu usuário sem o token]**
+**[Será validado que não é possivel excluir meu usuário sem o token]** (feito)
 
 Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
