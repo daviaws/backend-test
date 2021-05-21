@@ -78,16 +78,17 @@ defmodule Platform.BlogTest do
   end
 
   describe "posts" do
-    alias Platform.Blog.Post
+    # alias Platform.Blog.Post
 
-    @valid_attrs %{content: "some content", title: "some title"}
-    @update_attrs %{content: "some updated content", title: "some updated title"}
+    # @valid_attrs %{content: "some content", title: "some title"}
+    # @update_attrs %{content: "some updated content", title: "some updated title"}
     @invalid_attrs %{content: nil, title: nil}
 
-    # test "list_posts/0 returns all posts" do
-    #   post = post_fixture()
-    #   assert Blog.list_posts() == [post]
-    # end
+    test "list_posts/0 returns all posts" do
+      posts = insert_list(2, :blog_post)
+
+      assert Blog.list_posts() == posts
+    end
 
     # test "get_post!/1 returns the post with given id" do
     #   post = post_fixture()

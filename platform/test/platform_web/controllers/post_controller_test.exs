@@ -19,6 +19,36 @@ defmodule PlatformWeb.PostControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json"), attrs: attrs}
   end
 
+  @post_view_fields [:id, :content, :title, :inserted_at, :updated_at, :user]
+  @user_view_fields [:id, :displayName, :email, :image]
+  defp struct_to_map(struct, select) do
+    struct
+    |> Map.from_struct()
+    |> Map.take(select)
+  end
+
+  defp naive_datetime_to_string_values(map) do
+    map
+    |> Enum.map(fn {key, value} ->
+      case value do
+        %NaiveDateTime{} -> {key, NaiveDateTime.to_iso8601(value)}
+        _ -> {key, value}
+      end
+    end)
+    |> Enum.into(%{})
+  end
+
+  defp normalize_user_value(map) do
+    Map.put(map, :user, struct_to_map(map.user, @user_view_fields))
+  end
+
+  defp normalize_post_view(post) do
+    post
+    |> struct_to_map(@post_view_fields)
+    |> naive_datetime_to_string_values()
+    |> normalize_user_value()
+  end
+
   defp format_bearer_token(token) do
     "Bearer \"" <> token <> "\""
   end
@@ -34,12 +64,43 @@ defmodule PlatformWeb.PostControllerTest do
     {user, token}
   end
 
-  # describe "index" do
-  #   test "lists all posts", %{conn: conn} do
-  #     conn = get(conn, Routes.post_path(conn, :index))
-  #     assert json_response(conn, 200)["data"] == []
-  #   end
-  # end
+  describe "index post" do
+    test "renders post when data is valid", %{conn: conn, attrs: attrs} do
+      {_user, token} = auth_user()
+      post1 = insert(:blog_post)
+      post2 = insert(:blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :index), attrs)
+
+      assert response = json_response(conn, 200)
+
+      assert Enum.map([post1, post2], &normalize_post_view/1) ==
+               Enum.map(response, &Platform.Helper.Map.atomize_keys/1)
+    end
+
+    test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
+      # same setup as success
+      {_user, _token} = auth_user()
+      _post1 = insert(:blog_post)
+      _post2 = insert(:blog_post)
+
+      conn = get(conn, Routes.post_path(conn, :index), attrs)
+
+      assert %{"message" => "Token não encontrado"} = json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn, attrs: attrs} do
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> get(Routes.post_path(conn, :index), attrs)
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
+  end
 
   describe "create post" do
     test "renders post when data is valid", %{conn: conn, attrs: attrs} do
