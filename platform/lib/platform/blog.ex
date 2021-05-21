@@ -124,7 +124,9 @@ defmodule Platform.Blog do
 
   """
   def list_posts do
-    Repo.all(Post)
+    Post
+    |> Repo.all()
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -142,6 +144,18 @@ defmodule Platform.Blog do
 
   """
   def get_post!(id), do: Repo.get!(Post, id)
+
+  # def get_post(id) do
+  #   case Repo.get(Post, id) do
+  #     nil ->
+  #       {
+  #         :error,
+  #         Ecto.Changeset.add_error(%Platform.Blog.Post{} |> Ecto.Changeset.change, :message, "Post não existe")
+  #       }
+
+  #     post -> {:ok, Repo.preload(post, :user)}
+  #   end
+  # end
 
   @doc """
   Creates a post.

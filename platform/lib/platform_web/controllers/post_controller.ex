@@ -21,7 +21,7 @@ defmodule PlatformWeb.PostController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.post_path(conn, :show, post))
-      |> render("show.json", post: post)
+      |> render("create.json", post: post)
     end
   end
 
