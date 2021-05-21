@@ -1,4 +1,12 @@
 defmodule PlatformWeb.JWT.Plug do
+  @moduledoc """
+  This module give support to JWT bearer tokens.
+
+  It decodes a bearer token and put it's :claims on conn.assigns
+
+  To access claims: conn.assigns[:claims]
+  Claims is a single Map.
+  """
   import Plug.Conn
   import Phoenix.Controller
 

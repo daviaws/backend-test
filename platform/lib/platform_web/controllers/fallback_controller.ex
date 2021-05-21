@@ -27,6 +27,12 @@ defmodule PlatformWeb.FallbackController do
     |> render("error.json", changeset: changeset)
   end
 
+  def call(conn, {:error, :user_forbidden}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{"message" => "Usuário não autorizado"})
+  end
+
   def call(conn, {:error, :bad_request}) do
     conn
     |> put_status(:bad_request)

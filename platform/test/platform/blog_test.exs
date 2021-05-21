@@ -7,6 +7,7 @@ defmodule Platform.BlogTest do
 
   @user_create_fields [:displayName, :email, :image, :password]
   @post_create_fields [:content, :title, :user_id]
+  @post_update_fields [:content, :title]
   defp struct_to_map(struct, select) do
     struct
     |> Map.from_struct()
@@ -69,7 +70,7 @@ defmodule Platform.BlogTest do
   end
 
   describe "posts" do
-    # alias Platform.Blog.Post
+    alias Platform.Blog.Post
 
     # @valid_attrs %{content: "some content", title: "some title"}
     # @update_attrs %{content: "some updated content", title: "some updated title"}
@@ -103,18 +104,23 @@ defmodule Platform.BlogTest do
       assert {:error, %Ecto.Changeset{}} = Blog.create_post(@invalid_attrs)
     end
 
-    # test "update_post/2 with valid data updates the post" do
-    #   post = post_fixture()
-    #   assert {:ok, %Post{} = post} = Blog.update_post(post, @update_attrs)
-    #   assert post.content == "some updated content"
-    #   assert post.title == "some updated title"
-    # end
+    test "update_post/2 with valid data updates the post" do
+      post = insert(:blog_post)
+      update_attrs = params_for(:blog_post)
 
-    # test "update_post/2 with invalid data returns error changeset" do
-    #   post = post_fixture()
-    #   assert {:error, %Ecto.Changeset{}} = Blog.update_post(post, @invalid_attrs)
-    #   assert post == Blog.get_post!(post.id)
-    # end
+      assert {:ok, %Post{} = updated_post} = Blog.update_post(post, update_attrs)
+
+      assert struct_to_map(post, @post_update_fields) != update_attrs
+      assert struct_to_map(updated_post, @post_update_fields) == update_attrs
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      post = insert(:blog_post)
+
+      assert {:error, %Ecto.Changeset{}} = Blog.update_post(post, @invalid_attrs)
+
+      assert Blog.get_post(post.id) == {:ok, post}
+    end
 
     # test "delete_post/1 deletes the post" do
     #   post = post_fixture()

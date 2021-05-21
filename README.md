@@ -451,7 +451,7 @@ Se o id do post for inválido o resultado retornado deverá ser conforme exibido
 
 ![Listar um post inexistente](./public/listarumpostinexistente.png)
 
-### 9 - Sua aplicação deve ter o endpoint PUT `/post/:id`
+### 9 - Sua aplicação deve ter o endpoint PUT `/post/:id` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -474,35 +474,35 @@ Se o id do post for inválido o resultado retornado deverá ser conforme exibido
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível editar um blogpost com sucesso]**
+**[Será validado que é possível editar um blogpost com sucesso]** (feito)
 
 Se editar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![blogpost com token inválido](./public/editarpostcomsucesso.png)
 
-**[Será validado que não é possível editar um blogpost com outro usuário]**
+**[Será validado que não é possível editar um blogpost com outro usuário]** (feito)
 
 ![blogpost com token inválido](./public/editarcomoutrousuario.png)
 
-**[Será validado que não possível editar um blogpost sem token]**
+**[Será validado que não possível editar um blogpost sem token]** (feito)
 
 Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost com token inválido](./public/editarsemtoken.png)
 
-**[Será validado que não possível editar um blogpost com token inválido]**
+**[Será validado que não possível editar um blogpost com token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost com token inválido](./public/editartokeninvalido.png)
 
-**[Será validado que não possível editar um blogpost sem o campo `title`]**
+**[Será validado que não possível editar um blogpost sem o campo `title`]** (feito)
 
 Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![blogpost com token inválido](./public/editarsemtitle.png)
 
-**[Será validado que não possível editar um blogpost sem o campo `content`]**
+**[Será validado que não possível editar um blogpost sem o campo `content`]** (feito)
 
 Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
