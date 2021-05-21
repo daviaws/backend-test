@@ -33,10 +33,10 @@ defmodule PlatformWeb.PostController do
     end
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}) do
-    post = Blog.get_post!(id)
-
-    with {:ok, %Post{} = post} <- Blog.update_post(post, post_params) do
+  def update(conn, %{"id" => id} = params) do
+    with {:ok, %Post{} = post} <- Blog.get_post(id),
+         :ok <- authenticate_me(conn, post),
+         {:ok, %Post{} = post} <- Blog.update_post(post, params) do
       render(conn, "show.json", post: post)
     end
   end
@@ -46,6 +46,14 @@ defmodule PlatformWeb.PostController do
 
     with {:ok, %Post{}} <- Blog.delete_post(post) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  defp authenticate_me(conn, post) do
+    if Map.get(conn.assigns[:claims], "user_id") == post.user_id do
+      :ok
+    else
+      {:error, :user_forbidden}
     end
   end
 end

@@ -214,27 +214,91 @@ defmodule PlatformWeb.PostControllerTest do
     end
   end
 
-  # describe "update post" do
-  #   setup [:create_post]
+  describe "update post" do
+    test "renders post when data is valid", %{conn: conn} do
+      {user, token} = auth_user()
+      post = insert(:blog_post, user: user)
 
-  #   test "renders post when data is valid", %{conn: conn, post: %Post{id: id} = post} do
-  #     conn = put(conn, Routes.post_path(conn, :update, post), post: @update_attrs)
-  #     assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      attrs = params_for(:blog_post)
 
-  #     conn = get(conn, Routes.post_path(conn, :show, id))
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> put(Routes.post_path(conn, :update, post.id), attrs)
 
-  #     assert %{
-  #              "id" => id,
-  #              "content" => "some updated content",
-  #              "title" => "some updated title"
-  #            } = json_response(conn, 200)["data"]
-  #   end
+      assert attrs ==
+               json_response(conn, 200)
+               |> Platform.Helper.Map.atomize_keys()
+               |> Map.take([:content, :title])
+    end
 
-  #   test "renders errors when data is invalid", %{conn: conn, post: post} do
-  #     conn = put(conn, Routes.post_path(conn, :update, post), post: @invalid_attrs)
-  #     assert json_response(conn, 422)["errors"] != %{}
-  #   end
-  # end
+    test "renders 401 when user is not the same", %{conn: conn} do
+      {_user1, token} = auth_user()
+      user2 = insert(:blog_user)
+      post = insert(:blog_post, user: user2)
+
+      attrs = params_for(:blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> put(Routes.post_path(conn, :update, post.id), attrs)
+
+      assert %{"message" => "Usuário não autorizado"} == json_response(conn, 401)
+    end
+
+    test "renders 400 without title ou attrs", %{conn: conn} do
+      {user, token} = auth_user()
+      post = insert(:blog_post, user: user)
+
+      attrs = params_for(:blog_post) |> Map.delete(:title)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> put(Routes.post_path(conn, :update, post.id), attrs)
+
+      assert %{"title" => ["can't be blank"]} = json_response(conn, 400)["errors"]
+    end
+
+    test "renders 400 without content ou attrs", %{conn: conn} do
+      {user, token} = auth_user()
+      post = insert(:blog_post, user: user)
+
+      attrs = params_for(:blog_post) |> Map.delete(:content)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> put(Routes.post_path(conn, :update, post.id), attrs)
+
+      assert %{"content" => ["can't be blank"]} = json_response(conn, 400)["errors"]
+    end
+
+    test "renders 401 without bearer token", %{conn: conn} do
+      {user, _token} = auth_user()
+      post = insert(:blog_post, user: user)
+
+      attrs = params_for(:blog_post)
+
+      conn = put(conn, Routes.post_path(conn, :update, post.id), attrs)
+
+      assert %{"message" => "Token não encontrado"} = json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn} do
+      {user, _token} = auth_user()
+      post = insert(:blog_post, user: user)
+      attrs = params_for(:blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> put(Routes.post_path(conn, :update, post.id), attrs)
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
+  end
 
   # describe "delete post" do
   #   setup [:create_post]

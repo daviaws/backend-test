@@ -18,6 +18,7 @@ defmodule Platform.Blog.Post do
   @doc false
   def changeset(post, attrs) do
     post
+    |> change(%{content: nil, title: nil})
     |> cast(attrs, @required)
     |> validate_required(@required)
   end
