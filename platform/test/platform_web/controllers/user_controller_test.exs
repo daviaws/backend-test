@@ -37,13 +37,12 @@ defmodule PlatformWeb.UserControllerTest do
     token
   end
 
+  @user_view_fields [:id, :displayName, :email, :image]
   defp struct_to_map(struct, select) do
     struct
     |> Map.from_struct()
     |> Map.take(select)
   end
-
-  @user_view_fields [:id, :displayName, :email, :image]
 
   describe "index user" do
     test "renders user when data is valid", %{conn: conn, attrs: attrs} do

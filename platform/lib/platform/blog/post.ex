@@ -6,20 +6,19 @@ defmodule Platform.Blog.Post do
 
   schema "blog_posts" do
     field :content, :string
-    field :publihed, :naive_datetime
     field :title, :string
-    field :updated, :naive_datetime
 
     belongs_to :user, User
 
     timestamps()
   end
 
+  @required [:title, :content, :user_id]
+
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :publihed, :updated])
-    |> validate_required([:title, :content, :publihed, :updated])
-    |> cast_assoc(:user, required: true)
+    |> cast(attrs, @required)
+    |> validate_required(@required)
   end
 end

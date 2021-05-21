@@ -9,8 +9,6 @@ defmodule Platform.BlogPostFactory do
         %Post{
           title: Faker.StarWars.planet(),
           content: Faker.StarWars.quote(),
-          publihed: Faker.DateTime.backward(1),
-          updated: Faker.DateTime.backward(0),
           user: build(:blog_user)
         }
       end
