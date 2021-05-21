@@ -52,7 +52,8 @@ defmodule PlatformWeb.LoginControllerTest do
 
       assert attrs.email == ""
 
-      assert %{"errors" => %{"email" => ["is not allowed to be empty"]}} = json_response(conn, 400)
+      assert %{"errors" => %{"email" => ["is not allowed to be empty"]}} =
+               json_response(conn, 400)
     end
 
     test "renders 400 when user do not exist", %{conn: conn, attrs: attrs} do

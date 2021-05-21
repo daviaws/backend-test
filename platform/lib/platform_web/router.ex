@@ -13,12 +13,24 @@ defmodule PlatformWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticatedApi do
+    plug :accepts, ["json"]
+
+    plug PlatformWeb.JWT.Plug
+  end
+
   scope "/", PlatformWeb do
     pipe_through :api
 
     post "/user", UserController, :create
 
     post "/login", LoginController, :create
+  end
+
+  scope "/", PlatformWeb do
+    pipe_through :authenticatedApi
+
+    get "/user", UserController, :index
   end
 
   # Other scopes may use custom stacks.
