@@ -30,4 +30,8 @@ defmodule Platform.Blog.User do
     |> unique_constraint(:email, message: "Usuário já existe")
     |> validate_length(:password, min: 6, max: 6)
   end
+
+  def empty_changeset() do
+    cast(%User{}, %{}, [])
+  end
 end
