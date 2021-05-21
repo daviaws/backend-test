@@ -33,6 +33,8 @@ defmodule PlatformWeb.Router do
     get "/user", UserController, :index
     get "/user/:id", UserController, :show
     delete "/user/me", UserController, :delete
+
+    resources "/post", PostController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
