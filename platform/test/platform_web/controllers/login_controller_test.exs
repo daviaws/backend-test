@@ -59,7 +59,7 @@ defmodule PlatformWeb.LoginControllerTest do
     test "renders 400 when user do not exist", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.login_path(conn, :create), attrs)
 
-      assert %{"errors" => %{"email" => ["Campos inválidos"]}} = json_response(conn, 400)
+      assert %{"errors" => %{"message" => ["Campos inválidos"]}} = json_response(conn, 400)
     end
   end
 end
