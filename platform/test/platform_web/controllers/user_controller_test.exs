@@ -1,6 +1,10 @@
 defmodule PlatformWeb.UserControllerTest do
   use PlatformWeb.ConnCase
 
+  alias Platform.Blog
+
+  import Platform.Factory
+
   @default_attrs %{
     displayName: "Brett Wiltshire",
     email: "brett@email.com",
@@ -18,6 +22,71 @@ defmodule PlatformWeb.UserControllerTest do
     }
 
     {:ok, conn: put_req_header(conn, "accept", "application/json"), attrs: attrs}
+  end
+
+  defp format_bearer_token(token) do
+    "Bearer \"" <> token <> "\""
+  end
+
+  defp put_bearer_token(conn, token) do
+    put_req_header(conn, "authorization", token |> format_bearer_token)
+  end
+
+  defp auth_user(attrs) do
+    {:ok, token, _token_map} = Blog.login(attrs)
+    token
+  end
+
+  defp struct_to_map(struct, select) do
+    struct
+    |> Map.from_struct()
+    |> Map.take(select)
+
+    # |> Platform.Helper.Map.atomize_keys()
+  end
+
+  @user_view_fields [:id, :displayName, :email, :image]
+
+  describe "index user" do
+    test "renders user when data is valid", %{conn: conn, attrs: attrs} do
+      user1 = insert(:blog_user, attrs)
+      user2 = insert(:blog_user)
+      token = auth_user(attrs)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.user_path(conn, :index), attrs)
+
+      assert response = Enum.map(json_response(conn, 200), &Platform.Helper.Map.atomize_keys/1)
+
+      assert [
+               struct_to_map(user1, @user_view_fields),
+               struct_to_map(user2, @user_view_fields)
+             ] == response
+    end
+
+    test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
+      # same setup as success
+      _user1 = insert(:blog_user, attrs)
+      _user2 = insert(:blog_user)
+      _token = auth_user(attrs)
+
+      conn =
+        conn
+        |> get(Routes.user_path(conn, :index), attrs)
+
+      assert %{"message" => "Token não encontrado"} = json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn, attrs: attrs} do
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> get(Routes.user_path(conn, :index), attrs)
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
   end
 
   describe "create user" do
@@ -90,12 +159,6 @@ defmodule PlatformWeb.UserControllerTest do
 
       assert json_response(conn, 400)["errors"] != %{}
     end
-
-    # test "renders errors when email is nil`", %{conn: conn, attrs: attrs} do
-    #   conn = post(conn, Routes.user_path(conn, :create), user: Map.put(attrs, :email, nil))
-
-    #   assert json_response(conn, 400)["errors"] != %{}
-    # end
   end
 
   # describe "update user" do

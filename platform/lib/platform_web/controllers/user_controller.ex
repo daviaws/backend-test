@@ -16,7 +16,7 @@ defmodule PlatformWeb.UserController do
          {:ok, token, _token_map} <- Blog.login(params) do
       conn
       |> put_status(:created)
-      |> render("show.json", login: token)
+      |> render("login.json", login: token)
     end
   end
 

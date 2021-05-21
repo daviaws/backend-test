@@ -202,7 +202,7 @@ Se o login for com usuário inexistente o resultado retornado deverá ser confor
 
 ![Usuário não existe](./public/usuarionaoexiste.png)
 
-### 3 - Sua aplicação deve ter o endpoint GET `/user`
+### 3 - Sua aplicação deve ter o endpoint GET `/user` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -223,19 +223,19 @@ Se o login for com usuário inexistente o resultado retornado deverá ser confor
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível listar todos os usuários]**
+**[Será validado que é possível listar todos os usuários]** (feito)
 
 Ao listar usuários com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![Listar usuários](./public/listarusuarios.png)
 
-**[Será validado que não é possível listar usuários sem o token na requisição]**
+**[Será validado que não é possível listar usuários sem o token na requisição]** (feito)
 
 Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![Token Vazio](./public/tokenvazio.png)
 
-**[Será validado que não é possível listar usuários com o token inválido]**
+**[Será validado que não é possível listar usuários com o token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
