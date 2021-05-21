@@ -13,6 +13,7 @@ defmodule PlatformWeb.FallbackController do
   def map_status(changeset) do
     case PlatformWeb.ChangesetView.translate_errors(changeset) do
       %{message: ["Usuário não existe"]} -> :not_found
+      %{message: ["Post não existe"]} -> :not_found
       %{email: ["Usuário já existe"]} -> :conflict
       _ -> :bad_request
     end

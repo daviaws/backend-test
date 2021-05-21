@@ -18,15 +18,6 @@ defmodule Platform.BlogTest do
 
     @invalid_attrs %{displayName: nil, email: nil, image: nil, password: nil}
 
-    # def user_fixture(attrs \\ %{}) do
-    #   {:ok, user} =
-    #     attrs
-    #     |> Enum.into(@valid_attrs)
-    #     |> Blog.create_user()
-
-    #   user
-    # end
-
     # test "list_users/0 returns all users" do
     #   user = user_fixture()
     #   assert Blog.list_users() == [user]
@@ -90,10 +81,11 @@ defmodule Platform.BlogTest do
       assert Blog.list_posts() == posts
     end
 
-    # test "get_post!/1 returns the post with given id" do
-    #   post = post_fixture()
-    #   assert Blog.get_post!(post.id) == post
-    # end
+    test "get_post/1 returns the post with given id" do
+      post = insert(:blog_post)
+
+      assert Blog.get_post(post.id) == {:ok, post}
+    end
 
     test "create_post/1 with valid data creates a post" do
       user = insert(:blog_user)
