@@ -310,7 +310,7 @@ Se não conter o token o resultado retornado deverá ser conforme exibido abaixo
 
 ![Deletar sem token](./public/deletarsemtoken.png)
 
-### 6 - Sua aplicação deve ter o endpoint POST `/post`
+### 6 - Sua aplicação deve ter o endpoint POST `/post` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -327,33 +327,33 @@ Se não conter o token o resultado retornado deverá ser conforme exibido abaixo
 
 - A requisição deve ter o token de autenticação nos headers e, caso contrário, retorne um código de `status 401`.
 
-### Além disso, as seguintes verificações serão feitas:
+### Além disso, as seguintes verificações serão feitas: 
 
-**[Será validado que é possível cadastrar um blogpost com sucesso]**
+**[Será validado que é possível cadastrar um blogpost com sucesso]** (feito)
 
 Se cadastrar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
 
 ![Criar blogspot com sucesso](./public/criarblogpost.png)
 
-**[Será validado que não é possível cadastrar um blogpost sem o campo `title`]**
+**[Será validado que não é possível cadastrar um blogpost sem o campo `title`]** (feito)
 
 Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![blogpost sem content](./public/camposemtitle.png)
 
-**[Será validado que não é possível cadastrar um blogpost sem o campo `content`]**
+**[Será validado que não é possível cadastrar um blogpost sem o campo `content`]** (feito)
 
 Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
 
 ![blogpost sem content](./public/semcampocontent.png)
 
-**[Será validado que não é possível cadastrar um blogpost sem o token]**
+**[Será validado que não é possível cadastrar um blogpost sem o token]** (feito)
 
 Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost sem token ](./public/criarpostsemtoken.png)
 
-**[Será validado que não é possível cadastrar um blogpost com o token inválido]**
+**[Será validado que não é possível cadastrar um blogpost com o token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
