@@ -102,6 +102,57 @@ defmodule PlatformWeb.PostControllerTest do
     end
   end
 
+  describe "show post" do
+    test "renders post when data is valid", %{conn: conn} do
+      {_user, token} = auth_user()
+      post = insert(:blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert normalize_post_view(post) ==
+               json_response(conn, 200) |> Platform.Helper.Map.atomize_keys()
+    end
+
+    test "renders 404 when post not exist", %{conn: conn} do
+      {_user, token} = auth_user()
+
+      unexistent_post_id = 1
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, unexistent_post_id))
+
+      assert %{"message" => ["Post não existe"]} = json_response(conn, 404)["errors"]
+    end
+
+    test "renders 401 without bearer token", %{conn: conn} do
+      # same setup as success
+      {_user, _token} = auth_user()
+      post = insert(:blog_post)
+
+      conn =
+        conn
+        |> get(Routes.user_path(conn, :show, post.id))
+
+      assert %{"message" => "Token não encontrado"} = json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn} do
+      post = insert(:blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> get(Routes.user_path(conn, :show, post.id))
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
+  end
+
   describe "create post" do
     test "renders post when data is valid", %{conn: conn, attrs: attrs} do
       {user, token} = auth_user()

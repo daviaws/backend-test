@@ -26,8 +26,11 @@ defmodule PlatformWeb.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Blog.get_post!(id)
-    render(conn, "show.json", post: post)
+    with {:ok, %Post{} = post} <- Blog.get_post(id) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", post: post)
+    end
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
