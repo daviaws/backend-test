@@ -122,15 +122,42 @@ defmodule Platform.BlogTest do
       assert Blog.get_post(post.id) == {:ok, post}
     end
 
+    test "search_post/1 return valid content match" do
+      post = insert(:blog_post)
+
+      search_candidate =
+        post.content
+        |> String.split()
+        |> Enum.take(2)
+        |> Enum.join(" ")
+
+      assert Blog.search_post(search_candidate) == [post]
+    end
+
+    test "search_post/1 return valid title match" do
+      post = insert(:blog_post)
+
+      search_candidate =
+        post.title
+        |> String.split()
+        |> Enum.take(2)
+        |> Enum.join(" ")
+
+      assert Blog.search_post(search_candidate) == [post]
+    end
+
+    test "search_post/1 return [] when no content or title match" do
+      _post = insert(:blog_post)
+
+      unprobably_match = "abc zyz #!@"
+
+      assert Blog.search_post(unprobably_match) == []
+    end
+
     # test "delete_post/1 deletes the post" do
     #   post = post_fixture()
     #   assert {:ok, %Post{}} = Blog.delete_post(post)
     #   assert_raise Ecto.NoResultsError, fn -> Blog.get_post!(post.id) end
-    # end
-
-    # test "change_post/1 returns a post changeset" do
-    #   post = post_fixture()
-    #   assert %Ecto.Changeset{} = Blog.change_post(post)
     # end
   end
 end

@@ -25,6 +25,13 @@ defmodule PlatformWeb.PostController do
     end
   end
 
+  # This is a possible match of defined search route
+  def show(conn, %{"id" => "search", "q" => search}) do
+    with posts <- Blog.search_post(search) do
+      render(conn, "index.json", posts: posts)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     with {:ok, %Post{} = post} <- Blog.get_post(id) do
       conn
