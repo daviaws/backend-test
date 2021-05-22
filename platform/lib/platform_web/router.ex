@@ -35,10 +35,11 @@ defmodule PlatformWeb.Router do
     delete "/user/me", UserController, :delete
 
     get "/post", PostController, :index
-    # "/search?q=:search" matches this method too
+    # "/search?q=:search" matches :show method too
     get "/post/:id", PostController, :show
     post "/post", PostController, :create
     put "/post/:id", PostController, :update
+    delete "/post/:id", PostController, :delete
   end
 
   # Other scopes may use custom stacks.

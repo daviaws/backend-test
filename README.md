@@ -572,7 +572,7 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ![blogpost com token inválido](./public/buscarpostcomtokeninvalido.png)
 
-### 11 - Sua aplicação deve ter o endpoint DELETE `post/:id`
+### 11 - Sua aplicação deve ter o endpoint DELETE `post/:id` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -586,31 +586,31 @@ Se o token for inválido o resultado retornado deverá ser conforme exibido abai
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível deletar um blogpost com sucesso]**
+**[Será validado que é possível deletar um blogpost com sucesso]** (feito)
 
 Se deletar blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `204`:
 
 ![blogpost com token inválido](./public/deletarpostcomsucesso.png)
 
-**[Será validado que não é possível deletar um blogpost com outro usuário]**
+**[Será validado que não é possível deletar um blogpost com outro usuário]** (feito)
 
 Se não for o dono do blogpost o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost com token inválido](./public/deletarpostcomoutrousuario.png)
 
-**[Será validado que não é possível deletar um blogpost inexistente]**
+**[Será validado que não é possível deletar um blogpost inexistente]** (feito)
 
 Se o blogpost nao existir o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
 
 ![blogpost com token inválido](./public/deletarpostquenaoexiste.png)
 
-**[Será validado que não é possível deletar um blogpost sem o token]**
+**[Será validado que não é possível deletar um blogpost sem o token]** (feito)
 
 Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost com token inválido](./public/deletarpostsemtoken.png)
 
-**[Será validado que não é possível deletar um blogpost com o token inválido]**
+**[Será validado que não é possível deletar um blogpost com o token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 

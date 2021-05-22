@@ -37,13 +37,13 @@ defmodule PlatformWeb.LoginControllerTest do
     test "renders 400 when email is not present", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.login_path(conn, :create), Map.delete(attrs, :email))
 
-      assert %{"errors" => %{"email" => ["can't be blank"]}} = json_response(conn, 400)
+      assert %{"email" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     test "renders 400 when password is not present", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.login_path(conn, :create), Map.delete(attrs, :password))
 
-      assert %{"errors" => %{"password" => ["can't be blank"]}} = json_response(conn, 400)
+      assert %{"password" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     @tag email: ""
@@ -52,14 +52,13 @@ defmodule PlatformWeb.LoginControllerTest do
 
       assert attrs.email == ""
 
-      assert %{"errors" => %{"email" => ["is not allowed to be empty"]}} =
-               json_response(conn, 400)
+      assert %{"email" => ["is not allowed to be empty"]} = json_response(conn, 400)
     end
 
     test "renders 400 when user do not exist", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.login_path(conn, :create), attrs)
 
-      assert %{"errors" => %{"message" => ["Campos inválidos"]}} = json_response(conn, 400)
+      assert %{"message" => ["Campos inválidos"]} = json_response(conn, 400)
     end
   end
 end

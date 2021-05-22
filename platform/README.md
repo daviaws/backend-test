@@ -10,6 +10,12 @@
 
 ---
 
+## Documentation
+In **docs** directory:
+  * insomnia requests documentation
+
+---
+
 ## Build
 To build the project:
   * Give permission to build script `chmod +x script/build`
@@ -32,5 +38,10 @@ To start your Phoenix server locally:
   * Start Phoenix endpoint with `mix phx.server`
 
 ---
+
+### Know Issues:
+ * When setup is made on docker I had conflict trying to run locally afterward.
+ * Same occurred when I tryied to start locally then running dockerized.
+ - Quickfix: **rm \_build** directory
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

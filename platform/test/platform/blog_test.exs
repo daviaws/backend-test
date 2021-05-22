@@ -19,15 +19,17 @@ defmodule Platform.BlogTest do
 
     @invalid_attrs %{displayName: nil, email: nil, image: nil, password: nil}
 
-    # test "list_users/0 returns all users" do
-    #   user = user_fixture()
-    #   assert Blog.list_users() == [user]
-    # end
+    test "list_users/0 returns all users" do
+      users = insert_list(2, :blog_user)
 
-    # test "get_user!/1 returns the user with given id" do
-    #   user = user_fixture()
-    #   assert Blog.get_user!(user.id) == user
-    # end
+      assert Blog.list_users() == users
+    end
+
+    test "get_user returns the user with given id" do
+      user = insert(:blog_user)
+
+      assert Blog.get_user(user.id) == {:ok, user}
+    end
 
     test "create_user/1 with valid data creates a user" do
       attrs = params_for(:blog_user)
@@ -42,38 +44,18 @@ defmodule Platform.BlogTest do
       assert {:error, %Ecto.Changeset{}} = Blog.create_user(@invalid_attrs)
     end
 
-    # test "update_user/2 with valid data updates the user" do
-    #   user = user_fixture()
-    #   assert {:ok, %User{} = user} = Blog.update_user(user, @update_attrs)
-    #   assert user.displayName == "some updated displayName"
-    #   assert user.email == "a@c"
-    #   assert user.image == "some updated image"
-    #   assert user.password == "some updated password"
-    # end
+    test "delete_user/1 deletes the user" do
+      user = insert(:blog_user)
 
-    # test "update_user/2 with invalid data returns error changeset" do
-    #   user = user_fixture()
-    #   assert {:error, %Ecto.Changeset{}} = Blog.update_user(user, @invalid_attrs)
-    #   assert user == Blog.get_user!(user.id)
-    # end
+      assert {:ok, %User{}} = Blog.delete_user(user)
 
-    # test "delete_user/1 deletes the user" do
-    #   user = user_fixture()
-    #   assert {:ok, %User{}} = Blog.delete_user(user)
-    #   assert_raise Ecto.NoResultsError, fn -> Blog.get_user!(user.id) end
-    # end
-
-    # test "change_user/1 returns a user changeset" do
-    #   user = user_fixture()
-    #   assert %Ecto.Changeset{} = Blog.change_user(user)
-    # end
+      assert {:error, %Ecto.Changeset{}} = Blog.get_user(user.id)
+    end
   end
 
   describe "posts" do
     alias Platform.Blog.Post
 
-    # @valid_attrs %{content: "some content", title: "some title"}
-    # @update_attrs %{content: "some updated content", title: "some updated title"}
     @invalid_attrs %{content: nil, title: nil}
 
     test "list_posts/0 returns all posts" do
@@ -154,10 +136,12 @@ defmodule Platform.BlogTest do
       assert Blog.search_post(unprobably_match) == []
     end
 
-    # test "delete_post/1 deletes the post" do
-    #   post = post_fixture()
-    #   assert {:ok, %Post{}} = Blog.delete_post(post)
-    #   assert_raise Ecto.NoResultsError, fn -> Blog.get_post!(post.id) end
-    # end
+    test "delete_post/1 deletes the post" do
+      post = insert(:blog_post)
+
+      assert {:ok, %Post{}} = Blog.delete_post(post)
+
+      assert {:error, %Ecto.Changeset{}} = Blog.get_post(post.id)
+    end
   end
 end
