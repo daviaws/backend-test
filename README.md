@@ -508,7 +508,7 @@ Se não conter o campo `content` o resultado retornado deverá ser conforme exib
 
 ![blogpost com token inválido](./public/editarsemcontent.png)
 
-### 10  - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm`
+### 10  - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm` (feito)
 
 #### Os seguintes pontos serão avaliados:
 
@@ -536,37 +536,37 @@ Se não conter o campo `content` o resultado retornado deverá ser conforme exib
 
 ### Além disso, as seguintes verificações serão feitas:
 
-**[Será validado que é possível buscar um blogpost pelo `title`]**
+**[Será validado que é possível buscar um blogpost pelo `title`]** (feito)
 
 Se a buscar for pelo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![blogpost com token inválido](./public/buscarpostpelotitle.png)
 
-**[Será validado que é possível buscar um blogpost pelo `content`]**
+**[Será validado que é possível buscar um blogpost pelo `content`]** (feito)
 
 Se a buscar for pelo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![blogpost com token inválido](./public/buscarpostpelocontent.png)
 
-**[Será validado que é possível buscar todos os blogpost quando passa a busca vazia']**
+**[Será validado que é possível buscar todos os blogpost quando passa a busca vazia']** (feito)
 
 Se a buscar for vazia o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![blogpost com token inválido](./public/listarpostcampovazio.png)
 
-**[Será validado que é possível buscar um blogpost inexistente e retornar array vazio]**
+**[Será validado que é possível buscar um blogpost inexistente e retornar array vazio]** (feito)
 
 Se a buscar um post inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
 
 ![blogpost com token inválido](./public/listarumpostquenaoexiste.png)
 
-**[Será validado que não é possível buscar um blogpost sem o token]**
+**[Será validado que não é possível buscar um blogpost sem o token]** (feito)
 
 Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
 ![blogpost com token inválido](./public/buscarpostsemtoken.png)
 
-**[Será validado que não é possível buscar um blogpost com o token inválido]**
+**[Será validado que não é possível buscar um blogpost com o token inválido]** (feito)
 
 Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
 
