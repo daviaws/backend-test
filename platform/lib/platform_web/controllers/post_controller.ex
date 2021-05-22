@@ -49,9 +49,9 @@ defmodule PlatformWeb.PostController do
   end
 
   def delete(conn, %{"id" => id}) do
-    post = Blog.get_post!(id)
-
-    with {:ok, %Post{}} <- Blog.delete_post(post) do
+    with {:ok, %Post{} = post} <- Blog.get_post(id),
+         :ok <- authenticate_me(conn, post),
+         {:ok, %Post{}} <- Blog.delete_post(post) do
       send_resp(conn, :no_content, "")
     end
   end

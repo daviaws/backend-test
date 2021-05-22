@@ -6,8 +6,9 @@ defmodule Platform.Blog do
   import Ecto.Query, warn: false
   alias Platform.Repo
 
-  alias Platform.Blog.User
   alias Platform.Blog.Login
+  alias Platform.Blog.Post
+  alias Platform.Blog.User
 
   @doc """
   Returns the list of users.
@@ -22,8 +23,18 @@ defmodule Platform.Blog do
     Repo.all(User)
   end
 
-  def get_user!(id), do: Repo.get!(User, id)
+  @doc """
+  Get a user.
 
+  ## Examples
+
+      iex> get_user(existent_id)
+      {:ok, %Post{}}
+
+      iex> get_user(inexistent_id)
+      {:error, %Ecto.Changeset{message: "Usuário não existe"}}
+
+  """
   def get_user(id) do
     case Repo.get(User, id) do
       nil ->
@@ -56,24 +67,6 @@ defmodule Platform.Blog do
   end
 
   @doc """
-  Updates a user.
-
-  ## Examples
-
-      iex> update_user(user, %{field: new_value})
-      {:ok, %User{}}
-
-      iex> update_user(user, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_user(%User{} = user, attrs) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a user.
 
   ## Examples
@@ -90,18 +83,17 @@ defmodule Platform.Blog do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
+  Return a JWT to do authenticated actions
 
   ## Examples
 
-      iex> change_user(user)
-      %Ecto.Changeset{data: %User{}}
+      iex> login(valid_credentials)
+      {:ok, token, claims}
+
+      iex> login(invalid_credentials)
+      {:error, %Ecto.Changeset{}}
 
   """
-  def change_user(%User{} = user, attrs \\ %{}) do
-    User.changeset(user, attrs)
-  end
-
   def login(attrs) do
     {user, changeset} = Login.validate(attrs)
 
@@ -112,15 +104,13 @@ defmodule Platform.Blog do
     end
   end
 
-  alias Platform.Blog.Post
-
   @doc """
   Returns the list of posts.
 
   ## Examples
 
       iex> list_posts()
-      [%Post{}, ...]
+      [%Post{user: preloaded_user}, ...]
 
   """
   def list_posts do
@@ -130,21 +120,17 @@ defmodule Platform.Blog do
   end
 
   @doc """
-  Gets a single post.
-
-  Raises `Ecto.NoResultsError` if the Post does not exist.
+  Get a post.
 
   ## Examples
 
-      iex> get_post!(123)
-      %Post{}
+      iex> get_post(existent_post_id)
+      {:ok, %Post{}}
 
-      iex> get_post!(456)
-      ** (Ecto.NoResultsError)
+      iex> get_post(inexistent_post_id)
+      {:error, %Ecto.Changeset{message: "Post não existe"}}
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
-
   def get_post(id) do
     case Repo.get(Post, id) do
       nil ->
@@ -214,6 +200,23 @@ defmodule Platform.Blog do
     Repo.delete(post)
   end
 
+  @doc """
+  Return all posts matching the search param
+  Conditions:
+    search %ilike% title
+    search %ilike% content
+
+  If none matches return empty list
+
+  ## Examples
+
+      iex> search_post(matching_title_or_content)
+      [%Post{user: preloaded_user}, ...]
+
+      iex> search_post(not_matching)
+      []
+
+  """
   def search_post(search) do
     search = "%#{search}%"
 
