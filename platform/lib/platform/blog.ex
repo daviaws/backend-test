@@ -214,16 +214,15 @@ defmodule Platform.Blog do
     Repo.delete(post)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking post changes.
+  def search_post(search) do
+    search = "%#{search}%"
 
-  ## Examples
+    query =
+      from post in Post,
+        where: ilike(post.title, ^search),
+        or_where: ilike(post.content, ^search),
+        preload: :user
 
-      iex> change_post(post)
-      %Ecto.Changeset{data: %Post{}}
-
-  """
-  def change_post(%Post{} = post, attrs \\ %{}) do
-    Post.changeset(post, attrs)
+    Repo.all(query)
   end
 end

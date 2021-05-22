@@ -300,6 +300,85 @@ defmodule PlatformWeb.PostControllerTest do
     end
   end
 
+  describe "search post" do
+    test "renders post search by title", %{conn: conn} do
+      {_user, token} = auth_user()
+      attrs = params_for(:blog_post)
+      posts = insert_list(2, :blog_post, attrs)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, "search"), %{q: attrs.title})
+
+      assert Enum.map(posts, &normalize_post_view/1) ==
+               json_response(conn, 200) |> Platform.Helper.Map.atomize_keys()
+    end
+
+    test "renders post search by content", %{conn: conn} do
+      {_user, token} = auth_user()
+      attrs = params_for(:blog_post)
+      posts = insert_list(2, :blog_post, attrs)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, "search"), %{q: attrs.content})
+
+      assert Enum.map(posts, &normalize_post_view/1) ==
+               json_response(conn, 200) |> Platform.Helper.Map.atomize_keys()
+    end
+
+    test "renders all posts when search empty string", %{conn: conn} do
+      {_user, token} = auth_user()
+      posts = insert_list(2, :blog_post)
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, "search"), %{q: ""})
+
+      assert Enum.map(posts, &normalize_post_view/1) ==
+               json_response(conn, 200) |> Platform.Helper.Map.atomize_keys()
+    end
+
+    test "renders empty list when not match", %{conn: conn} do
+      {_user, token} = auth_user()
+
+      surely_unmatching_query = "abc"
+
+      conn =
+        conn
+        |> put_bearer_token(token)
+        |> get(Routes.post_path(conn, :show, "search"), %{q: surely_unmatching_query})
+
+      assert [] == json_response(conn, 200)
+    end
+
+    test "renders 401 without bearer token", %{conn: conn} do
+      {_user, _token} = auth_user()
+
+      surely_unmatching_query = "abc"
+
+      conn =
+        conn
+        |> get(Routes.post_path(conn, :show, "search"), %{q: surely_unmatching_query})
+
+      assert %{"message" => "Token não encontrado"} == json_response(conn, 401)
+    end
+
+    test "renders 401 invalid bearer token", %{conn: conn} do
+      surely_unmatching_query = "abc"
+
+      conn =
+        conn
+        |> put_bearer_token("invalid-token")
+        |> get(Routes.post_path(conn, :show, "search"), %{q: surely_unmatching_query})
+
+      assert %{"message" => "Token expirado ou inválido"} = json_response(conn, 401)
+    end
+  end
+
   # describe "delete post" do
   #   setup [:create_post]
 
