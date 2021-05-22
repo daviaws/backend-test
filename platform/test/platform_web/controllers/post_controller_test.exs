@@ -126,7 +126,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> get(Routes.post_path(conn, :show, unexistent_post_id))
 
-      assert %{"message" => ["Post não existe"]} = json_response(conn, 404)["errors"]
+      assert %{"message" => ["Post não existe"]} = json_response(conn, 404)
     end
 
     test "renders 401 without bearer token", %{conn: conn} do
@@ -179,7 +179,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> post(Routes.post_path(conn, :create), attrs)
 
-      assert %{"errors" => %{"content" => ["can't be blank"]}} = json_response(conn, 400)
+      assert %{"content" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     test "renders 400 when title is not present", %{conn: conn, attrs: attrs} do
@@ -192,7 +192,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> post(Routes.post_path(conn, :create), attrs)
 
-      assert %{"errors" => %{"title" => ["can't be blank"]}} = json_response(conn, 400)
+      assert %{"title" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
@@ -258,7 +258,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> put(Routes.post_path(conn, :update, post.id), attrs)
 
-      assert %{"title" => ["can't be blank"]} = json_response(conn, 400)["errors"]
+      assert %{"title" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     test "renders 400 without content ou attrs", %{conn: conn} do
@@ -272,7 +272,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> put(Routes.post_path(conn, :update, post.id), attrs)
 
-      assert %{"content" => ["can't be blank"]} = json_response(conn, 400)["errors"]
+      assert %{"content" => ["can't be blank"]} = json_response(conn, 400)
     end
 
     test "renders 401 without bearer token", %{conn: conn} do
@@ -393,7 +393,7 @@ defmodule PlatformWeb.PostControllerTest do
 
       conn = get(conn, Routes.post_path(conn, :show, post.id))
 
-      assert %{"message" => ["Post não existe"]} == json_response(conn, 404)["errors"]
+      assert %{"message" => ["Post não existe"]} == json_response(conn, 404)
     end
 
     test "renders 404 when chosen post do not exist", %{conn: conn} do
@@ -406,7 +406,7 @@ defmodule PlatformWeb.PostControllerTest do
         |> put_bearer_token(token)
         |> delete(Routes.post_path(conn, :delete, unexistent_id))
 
-      assert %{"message" => ["Post não existe"]} == json_response(conn, 404)["errors"]
+      assert %{"message" => ["Post não existe"]} == json_response(conn, 404)
     end
 
     test "renders 401 if not author of delete chosen post", %{conn: conn} do

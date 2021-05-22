@@ -111,7 +111,7 @@ defmodule PlatformWeb.UserControllerTest do
         |> put_bearer_token(token)
         |> get(Routes.user_path(conn, :show, user_id))
 
-      assert %{"message" => ["Usuário não existe"]} = json_response(conn, 404)["errors"]
+      assert %{"message" => ["Usuário não existe"]} = json_response(conn, 404)
     end
 
     test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
@@ -151,19 +151,19 @@ defmodule PlatformWeb.UserControllerTest do
     test "renders errors when displayName has less than 8 characters", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     test "renders errors when email is not present`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: Map.delete(attrs, :email))
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     test "renders errors when email is nil`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: Map.put(attrs, :email, nil))
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     @tag email: "not formated"
@@ -173,40 +173,40 @@ defmodule PlatformWeb.UserControllerTest do
     } do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     test "renders errors when email duplicated", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     test "renders errors when password is not present`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: Map.delete(attrs, :password))
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     test "renders errors when password is nil`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: Map.put(attrs, :password, nil))
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     @tag password: "12345"
     test "renders errors when password is lesser than 6 characters`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
 
     @tag password: "1234567"
     test "renders errors when password is greater than 6 characters`", %{conn: conn, attrs: attrs} do
       conn = post(conn, Routes.user_path(conn, :create), user: attrs)
 
-      assert json_response(conn, 400)["errors"] != %{}
+      assert json_response(conn, 400) != %{}
     end
   end
 
@@ -223,7 +223,7 @@ defmodule PlatformWeb.UserControllerTest do
       assert "" == response(conn, 204)
 
       conn = get(conn, Routes.user_path(conn, :show, user1.id))
-      assert %{"errors" => %{"message" => ["Usuário não existe"]}} = json_response(conn, 404)
+      assert %{"message" => ["Usuário não existe"]} = json_response(conn, 404)
     end
 
     test "renders 401 without bearer token", %{conn: conn, attrs: attrs} do
